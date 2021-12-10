@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, dead_code
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xo/soloplayer.dart';
 import 'home_page.dart';
@@ -7,27 +8,24 @@ import 'home_page.dart';
 void main() {
   runApp(const MaterialApp(
     title: 'Navigation Basics',
-    home: Mainpage(),
+    home: StartPage(),
   ));
 }
 
-class Mainpage extends StatefulWidget {
-  const Mainpage({Key? key}) : super(key: key);
+class StartPage extends StatefulWidget {
+  const StartPage({Key? key}) : super(key: key);
 
   @override
-  State<Mainpage> createState() => _MainpageState();
+  State<StartPage> createState() => _StartPageState();
 }
 
-class _MainpageState extends State<Mainpage> {
+class _StartPageState extends State<StartPage> {
   bool page = true;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      /*initialRoute: '/',
-      routes: {
-        '/': (context) => const Mainpage(),
-        '/HomePage': (context) => const HomePage(),
-      },*/
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           children: [

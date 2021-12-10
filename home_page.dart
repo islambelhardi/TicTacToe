@@ -16,7 +16,8 @@ class _HomePageState extends State<HomePage> {
   var player1 = [];
   var player2 = [];
   String gamestr = 'Play your Turn';
-
+  int player1w = 0;
+  int player2w = 0;
   List listButton = <GameButton>[
     new GameButton(1),
     new GameButton(2),
@@ -85,8 +86,14 @@ class _HomePageState extends State<HomePage> {
         listButton[i].enabled = false;
         listButton[i].clr = Colors.blueGrey;
       }
-
-      gamestr = "Player one Won";
+      // to calculate how many times the player wins
+      player1w++;
+      gamestr = "Player one for $player1w  time";
+      showDialog(
+        context: context,
+        // to build the winnerwidget that will popup in case he wins
+        builder: (BuildContext context) => _winnerwidget(context),
+      );
       return;
     }
 
@@ -98,8 +105,13 @@ class _HomePageState extends State<HomePage> {
         listButton[i].enabled = false;
         listButton[i].clr = Colors.blueGrey;
       }
-
-      gamestr = "Player two Won";
+      // to calculate how many times the player wins
+      player2w++;
+      gamestr = "Player two for $player2w time";
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => _winnerwidget(context),
+      );
       return;
     }
   }
@@ -159,6 +171,29 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
+    );
+  }
+
+// the widget that will popup if a player wins
+  Widget _winnerwidget(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('The winner is'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(gamestr),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Close'),
+        ),
+      ],
     );
   }
 }

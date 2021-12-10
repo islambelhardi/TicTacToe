@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, unnecessary_new, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'game_button.dart';
 
@@ -71,8 +73,11 @@ class SoloPlayerState extends State<SoloPlayer> {
         listButton[i].enabled = false;
         listButton[i].clr = Colors.blueGrey;
       }
-
-      gamestr = "Player one Won";
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => _winnerwidget(context),
+      );
+      gamestr = "You";
       return;
     }
 
@@ -93,7 +98,11 @@ class SoloPlayerState extends State<SoloPlayer> {
         listButton[i].enabled = false;
         listButton[i].clr = Colors.blueGrey;
       }
-      gamestr = "Player two Won";
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => _winnerwidget(context),
+      );
+      gamestr = "The computer";
       return;
     }
   }
@@ -161,6 +170,30 @@ class SoloPlayerState extends State<SoloPlayer> {
           },
         ),
       ),
+    );
+  }
+
+  // the widget that will popup if a player wins
+  Widget _winnerwidget(BuildContext context) {
+    // ignore: unnecessary_new
+    return new AlertDialog(
+      title: const Text('The winner is'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(gamestr),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Close'),
+        ),
+      ],
     );
   }
 }
