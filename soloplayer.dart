@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, unnecessary_new, duplicate_ignore
+// ignore_for_file: deprecated_member_use, unnecessary_new, duplicate_ignore, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'game_button.dart';
@@ -38,29 +38,73 @@ class SoloPlayerState extends State<SoloPlayer> {
     gamestr = "Play your turn";
   }
 
+  int player1w = 0;
+  int player2w = 0;
+  late List winner = [];
+
   bool checkWinner(var player) {
     if (player.contains(0) && player.contains(1) && player.contains(2)) {
+      winner = [
+        0,
+        1,
+        2,
+      ];
       return true;
     }
     if (player.contains(3) && player.contains(4) && player.contains(5)) {
+      winner = [
+        3,
+        4,
+        5,
+      ];
       return true;
     }
     if (player.contains(6) && player.contains(7) && player.contains(8)) {
+      winner = [
+        6,
+        7,
+        8,
+      ];
       return true;
     }
     if (player.contains(0) && player.contains(3) && player.contains(6)) {
+      winner = [
+        0,
+        3,
+        6,
+      ];
       return true;
     }
     if (player.contains(1) && player.contains(4) && player.contains(7)) {
+      winner = [
+        1,
+        4,
+        7,
+      ];
       return true;
     }
     if (player.contains(2) && player.contains(5) && player.contains(8)) {
+      winner = [
+        2,
+        5,
+        8,
+      ];
       return true;
     }
     if (player.contains(0) && player.contains(4) && player.contains(8)) {
+      winner = [
+        0,
+        4,
+        8,
+      ];
       return true;
     }
     if (player.contains(2) && player.contains(4) && player.contains(6)) {
+      winner = [
+        2,
+        4,
+        6,
+      ];
       return true;
     }
 
@@ -73,7 +117,6 @@ class SoloPlayerState extends State<SoloPlayer> {
       listButton[index].str = 'X';
       listButton[index].enabled = false;
       listButton[index].clr = Colors.red;
-
       player1.add(index);
     }
 
@@ -82,11 +125,15 @@ class SoloPlayerState extends State<SoloPlayer> {
         listButton[i].enabled = false;
         listButton[i].clr = Colors.blueGrey;
       }
+      for (var element in winner) {
+        listButton[element].clr = Colors.green;
+      }
+      player1w++;
       showDialog(
         context: context,
         builder: (BuildContext context) => _winnerwidget(context),
       );
-      gamestr = "You";
+      gamestr = "You $player1w time";
 
       return;
     }
@@ -182,12 +229,31 @@ class SoloPlayerState extends State<SoloPlayer> {
         listButton[i].enabled = false;
         listButton[i].clr = Colors.blueGrey;
       }
+      for (var element in winner) {
+        listButton[element].clr = Colors.green;
+      }
+      player2w++;
       showDialog(
         context: context,
         builder: (BuildContext context) => _winnerwidget(context),
       );
-      gamestr = "The computer";
+      gamestr = "The computer $player2w time";
       return;
+    }
+    bool gameover = true;
+    //to see if the game has ended
+    for (int i = 0; i <= 8; i++) {
+      if (listButton[i].enabled) {
+        gameover = false;
+      }
+    }
+    // to announce the draw
+    if (gameover) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => _winnerwidget(context),
+      );
+      gamestr = 'No One';
     }
   }
 
@@ -195,9 +261,9 @@ class SoloPlayerState extends State<SoloPlayer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello world"),
+        title: const Text("Play Vs Android"),
         centerTitle: true,
-        backgroundColor: Colors.red[600],
+        backgroundColor: Colors.black,
       ),
       body: Column(children: <Widget>[
         Expanded(
@@ -236,18 +302,24 @@ class SoloPlayerState extends State<SoloPlayer> {
             style: new TextStyle(color: Colors.black, fontSize: 40.0),
           ),
         ),
-        IconButton(
-          icon: Icon(
-            Icons.home_outlined,
+        SafeArea(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            alignment: Alignment.bottomCenter,
+            child: IconButton(
+              icon: Icon(
+                Icons.home_outlined,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
         ),
       ]),
       floatingActionButton: FloatingActionButton(
         child: Text("reset"),
-        backgroundColor: Colors.red[800],
+        backgroundColor: Colors.black,
         onPressed: () {
           setState(() {
             reset();
