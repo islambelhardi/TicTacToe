@@ -1,7 +1,7 @@
-// ignore_for_file: curly_braces_in_flow_control_structures, prefer_const_constructors, unnecessary_new, dead_code
+// ignore_for_file: prefer_const_constructors, unnecessary_new, dead_code
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xo/main.dart';
+
 import 'game_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     for (int i = 0; i < 9; i++) {
       listButton[i].str = '';
       listButton[i].enabled = true;
-      listButton[i].clr = Colors.blueGrey;
+      listButton[i].clr = Colors.white;
     }
     player1 = [];
     player2 = [];
@@ -42,22 +42,30 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool checkWinner(var player) {
-    if (player.contains(0) && player.contains(1) && player.contains(2))
+    if (player.contains(0) && player.contains(1) && player.contains(2)) {
       return true;
-    if (player.contains(3) && player.contains(4) && player.contains(5))
+    }
+    if (player.contains(3) && player.contains(4) && player.contains(5)) {
       return true;
-    if (player.contains(6) && player.contains(7) && player.contains(8))
+    }
+    if (player.contains(6) && player.contains(7) && player.contains(8)) {
       return true;
-    if (player.contains(0) && player.contains(3) && player.contains(6))
+    }
+    if (player.contains(0) && player.contains(3) && player.contains(6)) {
       return true;
-    if (player.contains(1) && player.contains(4) && player.contains(7))
+    }
+    if (player.contains(1) && player.contains(4) && player.contains(7)) {
       return true;
-    if (player.contains(2) && player.contains(5) && player.contains(8))
+    }
+    if (player.contains(2) && player.contains(5) && player.contains(8)) {
       return true;
-    if (player.contains(0) && player.contains(4) && player.contains(8))
+    }
+    if (player.contains(0) && player.contains(4) && player.contains(8)) {
       return true;
-    if (player.contains(2) && player.contains(4) && player.contains(6))
+    }
+    if (player.contains(2) && player.contains(4) && player.contains(6)) {
       return true;
+    }
 
     return false;
   }
@@ -70,13 +78,13 @@ class _HomePageState extends State<HomePage> {
         listButton[index].enabled = false;
         listButton[index].clr = Colors.red;
         player1.add(index);
-        //turn = true;
       }
     } else {
       if (listButton[index].enabled) {
         listButton[index].str = 'O';
+
         listButton[index].enabled = false;
-        listButton[index].clr = Colors.blue;
+        listButton[index].clr = Colors.black;
         player2.add(index);
       }
     }
@@ -94,6 +102,7 @@ class _HomePageState extends State<HomePage> {
         // to build the winnerwidget that will popup in case he wins
         builder: (BuildContext context) => _winnerwidget(context),
       );
+
       return;
     }
 
@@ -118,58 +127,72 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: <Widget>[
-        Expanded(
-            flex: 10,
-            child: GridView.builder(
-                padding: const EdgeInsets.all(10.0),
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1.0,
-                    crossAxisSpacing: 12.0,
-                    mainAxisSpacing: 12.0),
-                itemCount: 9,
-                itemBuilder: (context, index) {
-                  return new RaisedButton(
-                    padding: const EdgeInsets.all(8.0),
-                    child: new Text(
-                      listButton[index].str,
-                      style: new TextStyle(color: Colors.white, fontSize: 60.0),
-                    ),
-                    color: listButton[index].clr,
-                    disabledColor: Colors.grey,
-                    onPressed: () {
-                      setState(() {
-                        if (listButton[index].enabled) {
-                          playGame(index);
-                        }
-                      });
-                    },
-                  );
-                })),
-        Expanded(
-          flex: 3,
-          child: Text(
-            '$gamestr',
-            textAlign: TextAlign.start,
-            style: new TextStyle(color: Colors.black, fontSize: 40.0),
-          ),
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'MuseoModerno'),
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text("Hello world"),
+          centerTitle: true,
+          backgroundColor: Colors.red[600],
         ),
-        FloatingActionButton(
+        body: Column(children: <Widget>[
+          Expanded(
+              flex: 10,
+              child: GridView.builder(
+                  padding: const EdgeInsets.all(10.0),
+                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 1.0,
+                      crossAxisSpacing: 12.0,
+                      mainAxisSpacing: 12.0),
+                  itemCount: 9,
+                  itemBuilder: (context, index) {
+                    return new RaisedButton(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new Text(
+                        listButton[index].str,
+                        style:
+                            new TextStyle(color: Colors.white, fontSize: 60.0),
+                      ),
+                      color: listButton[index].clr,
+                      disabledColor: Colors.grey,
+                      onPressed: () {
+                        setState(() {
+                          if (listButton[index].enabled) {
+                            playGame(index);
+                          }
+                        });
+                      },
+                    );
+                  })),
+          Expanded(
+            flex: 3,
+            child: Text(
+              '$gamestr',
+              textAlign: TextAlign.start,
+              style: new TextStyle(color: Colors.black, fontSize: 40.0),
+            ),
+          ),
+          // to navigate to the startpage
+          IconButton(
+            icon: Icon(
+              Icons.home_outlined,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ]),
+        floatingActionButton: FloatingActionButton(
+          child: Text("reset"),
+          backgroundColor: Colors.red[800],
           onPressed: () {
-            Navigator.pop(context);
+            setState(() {
+              reset();
+            });
           },
         ),
-      ]),
-      floatingActionButton: FloatingActionButton(
-        child: Text("reset"),
-        backgroundColor: Colors.red[800],
-        onPressed: () {
-          setState(() {
-            reset();
-          });
-        },
       ),
     );
   }
