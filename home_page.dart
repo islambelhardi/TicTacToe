@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     for (int i = 0; i < 9; i++) {
       listButton[i].str = '';
       listButton[i].enabled = true;
-      listButton[i].clr = Colors.blueGrey;
+      listButton[i].clr = Colors.white;
     }
     player1 = [];
     player2 = [];
@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
     gamestr = "Play your turn";
   }
 
+// to store the winning buttons
   late List winner = [];
 
   bool checkWinner(var player) {
@@ -123,9 +124,9 @@ class _HomePageState extends State<HomePage> {
         player1.add(index);
       }
     } else {
+      // to pass the turn tp the other player
       if (listButton[index].enabled) {
         listButton[index].str = 'O';
-
         listButton[index].enabled = false;
         listButton[index].clr = Colors.black;
         player2.add(index);
@@ -138,7 +139,7 @@ class _HomePageState extends State<HomePage> {
         listButton[i].clr = Colors.blueGrey;
       }
       for (var element in winner) {
-        listButton[element].clr = Colors.green;
+        listButton[element].clr = Colors.red;
       }
       // to calculate how many times the player wins
       player1w++;
@@ -152,8 +153,6 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    // player 2
-
     turn = !turn;
     if (checkWinner(player2)) {
       for (int i = 0; i < 9; i++) {
@@ -165,6 +164,7 @@ class _HomePageState extends State<HomePage> {
       }
       // to calculate how many times the player wins
       player2w++;
+      // to show how many times the player wins in the popup
       gamestr = "Player two for $player2w time";
 
       showDialog(
@@ -196,72 +196,98 @@ class _HomePageState extends State<HomePage> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'MuseoModerno'),
       home: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Play Vs Friend"),
           centerTitle: true,
           backgroundColor: Colors.red[600],
         ),
-        body: SafeArea(
+        body: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/background.png'),
+                  fit: BoxFit.cover)),
           child: Column(children: <Widget>[
             Expanded(
                 flex: 10,
-                child: GridView.builder(
-                    padding: const EdgeInsets.all(10.0),
-                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 1.0,
-                        crossAxisSpacing: 12.0,
-                        mainAxisSpacing: 12.0),
-                    itemCount: 9,
-                    itemBuilder: (context, index) {
-                      return new RaisedButton(
-                        padding: const EdgeInsets.all(8.0),
-                        child: new Text(
-                          listButton[index].str,
-                          style: new TextStyle(
-                              color: Colors.white, fontSize: 60.0),
-                        ),
-                        color: listButton[index].clr,
-                        disabledColor: Colors.grey,
-                        onPressed: () {
-                          setState(() {
-                            if (listButton[index].enabled) {
-                              playGame(index);
-                            }
-                          });
-                        },
-                      );
-                    })),
-
-            // to navigate to the startpage
-            SafeArea(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                alignment: Alignment.bottomCenter,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.home_outlined,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 0),
+                  margin: EdgeInsets.only(top: 60, bottom: 0),
+                  child: GridView.builder(
+                      padding: const EdgeInsets.all(10.0),
+                      gridDelegate:
+                          new SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 1.0,
+                              crossAxisSpacing: 12.0,
+                              mainAxisSpacing: 12.0),
+                      itemCount: 9,
+                      itemBuilder: (context, index) {
+                        return new FlatButton(
+                          padding: const EdgeInsets.all(8.0),
+                          child: new Text(
+                            listButton[index].str,
+                            style: new TextStyle(
+                                color: Colors.white, fontSize: 60.0),
+                          ),
+                          color: listButton[index].clr,
+                          //disabledColor: Colors.grey,
+                          onPressed: () {
+                            setState(() {
+                              if (listButton[index].enabled) {
+                                playGame(index);
+                              }
+                            });
+                          },
+                        );
+                      }),
+                )),
+            Expanded(
+              flex: 0,
+              child: Text(
+                'Player1: $player2w   $player1w :Player2',
+                textAlign: TextAlign.start,
+                style: new TextStyle(color: Colors.black, fontSize: 30.0),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(right: 10, bottom: 30),
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueGrey),
+                    ),
+                    onPressed: () {
+                      // to navigate to the startpage
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.home_outlined, size: 18),
+                    label: Text("Home"),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 30),
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueGrey),
+                    ),
+                    onPressed: () {
+                      // to play again
+                      setState(() {
+                        reset();
+                      });
+                    },
+                    icon: Icon(Icons.cached_outlined, size: 18),
+                    label: Text("Play Again"),
+                  ),
+                ),
+              ],
+            ),
           ]),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Text(
-            "reset",
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-          backgroundColor: Colors.red,
-          onPressed: () {
-            setState(() {
-              reset();
-            });
-          },
         ),
       ),
     );

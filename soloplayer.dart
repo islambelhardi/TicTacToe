@@ -31,7 +31,7 @@ class SoloPlayerState extends State<SoloPlayer> {
     for (int i = 0; i < 9; i++) {
       listButton[i].str = '';
       listButton[i].enabled = true;
-      listButton[i].clr = Colors.blueGrey;
+      listButton[i].clr = Colors.white;
     }
     player1 = [];
     player2 = [];
@@ -126,7 +126,7 @@ class SoloPlayerState extends State<SoloPlayer> {
         listButton[i].clr = Colors.blueGrey;
       }
       for (var element in winner) {
-        listButton[element].clr = Colors.green;
+        listButton[element].clr = Colors.red;
       }
       player1w++;
       showDialog(
@@ -144,7 +144,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(2)) {
         listButton[2].str = 'O';
         listButton[2].enabled = false;
-        listButton[2].clr = Colors.blue;
+        listButton[2].clr = Colors.black;
         player2.add(2);
       }
     } else if (player1.contains(3) &&
@@ -153,7 +153,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(2)) {
         listButton[5].str = 'O';
         listButton[5].enabled = false;
-        listButton[5].clr = Colors.blue;
+        listButton[5].clr = Colors.black;
         player2.add(5);
       }
     } else if (player1.contains(6) &&
@@ -162,7 +162,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(2)) {
         listButton[8].str = 'O';
         listButton[8].enabled = false;
-        listButton[8].clr = Colors.blue;
+        listButton[8].clr = Colors.black;
         player2.add(8);
       }
     } else if (player1.contains(0) &&
@@ -171,7 +171,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(6)) {
         listButton[6].str = 'O';
         listButton[6].enabled = false;
-        listButton[6].clr = Colors.blue;
+        listButton[6].clr = Colors.black;
         player2.add(6);
       }
     } else if (player1.contains(1) &&
@@ -180,7 +180,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(7)) {
         listButton[7].str = 'O';
         listButton[7].enabled = false;
-        listButton[7].clr = Colors.blue;
+        listButton[7].clr = Colors.black;
         player2.add(7);
         ;
       }
@@ -190,7 +190,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(8)) {
         listButton[8].str = 'O';
         listButton[8].enabled = false;
-        listButton[8].clr = Colors.blue;
+        listButton[8].clr = Colors.black;
         player2.add(8);
       }
     } else if (player1.contains(0) &&
@@ -199,7 +199,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(8)) {
         listButton[8].str = 'O';
         listButton[8].enabled = false;
-        listButton[8].clr = Colors.blue;
+        listButton[8].clr = Colors.black;
         player2.add(8);
       }
     } else if (player1.contains(2) &&
@@ -208,7 +208,7 @@ class SoloPlayerState extends State<SoloPlayer> {
       if (!allPlayedButtons.contains(6)) {
         listButton[6].str = 'O';
         listButton[6].enabled = false;
-        listButton[6].clr = Colors.blue;
+        listButton[6].clr = Colors.black;
         player2.add(6);
       }
     } else {
@@ -217,7 +217,7 @@ class SoloPlayerState extends State<SoloPlayer> {
         if (!allPlayedButtons.contains(i)) {
           listButton[i].str = 'O';
           listButton[i].enabled = false;
-          listButton[i].clr = Colors.blue;
+          listButton[i].clr = Colors.black;
           player2.add(i);
           break;
         }
@@ -230,7 +230,7 @@ class SoloPlayerState extends State<SoloPlayer> {
         listButton[i].clr = Colors.blueGrey;
       }
       for (var element in winner) {
-        listButton[element].clr = Colors.green;
+        listButton[element].clr = Colors.black;
       }
       player2w++;
       showDialog(
@@ -265,66 +265,92 @@ class SoloPlayerState extends State<SoloPlayer> {
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      body: Column(children: <Widget>[
-        Expanded(
-            flex: 10,
-            child: GridView.builder(
-                padding: const EdgeInsets.all(10.0),
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1.0,
-                    crossAxisSpacing: 12.0,
-                    mainAxisSpacing: 12.0),
-                itemCount: 9,
-                itemBuilder: (context, index) {
-                  return new RaisedButton(
-                    padding: const EdgeInsets.all(8.0),
-                    child: new Text(
-                      listButton[index].str,
-                      style: new TextStyle(color: Colors.white, fontSize: 60.0),
-                    ),
-                    color: listButton[index].clr,
-                    disabledColor: Colors.grey,
-                    onPressed: () {
-                      setState(() {
-                        if (listButton[index].enabled) {
-                          playGame(index);
-                        }
-                      });
-                    },
-                  );
-                })),
-        Expanded(
-          flex: 3,
-          child: Text(
-            '$gamestr',
-            textAlign: TextAlign.start,
-            style: new TextStyle(color: Colors.black, fontSize: 40.0),
-          ),
-        ),
-        SafeArea(
-          child: Container(
-            padding: EdgeInsets.all(20),
-            alignment: Alignment.bottomCenter,
-            child: IconButton(
-              icon: Icon(
-                Icons.home_outlined,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('images/background.png'), fit: BoxFit.cover)),
+        child: Column(children: <Widget>[
+          Expanded(
+              flex: 10,
+              child: Container(
+                padding: EdgeInsets.only(bottom: 0),
+                margin: EdgeInsets.only(top: 60, bottom: 0),
+                child: GridView.builder(
+                    padding: const EdgeInsets.all(10.0),
+                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        childAspectRatio: 1.0,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0),
+                    itemCount: 9,
+                    itemBuilder: (context, index) {
+                      return new RaisedButton(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Text(
+                          listButton[index].str,
+                          style: new TextStyle(
+                              color: Colors.white, fontSize: 60.0),
+                        ),
+                        color: listButton[index].clr,
+                        disabledColor: Colors.grey,
+                        onPressed: () {
+                          setState(() {
+                            if (listButton[index].enabled) {
+                              playGame(index);
+                            }
+                          });
+                        },
+                      );
+                    }),
+              )),
+          Expanded(
+            flex: 1,
+            child: Text(
+              'Android: $player2w     $player1w :You',
+              textAlign: TextAlign.start,
+              style: new TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'MuseoModerno',
+                  fontSize: 30),
             ),
           ),
-        ),
-      ]),
-      floatingActionButton: FloatingActionButton(
-        child: Text("reset"),
-        backgroundColor: Colors.black,
-        onPressed: () {
-          setState(() {
-            reset();
-          });
-        },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.only(right: 10, bottom: 30),
+                child: ElevatedButton.icon(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blueGrey),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.home_outlined, size: 18),
+                  label: Text("Home"),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(bottom: 30),
+                child: ElevatedButton.icon(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blueGrey),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      reset();
+                    });
+                  },
+                  icon: Icon(Icons.cached_outlined, size: 18),
+                  label: Text("Play Again"),
+                ),
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }

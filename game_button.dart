@@ -7,7 +7,7 @@ class GameButton {
   late String str;
   GameButton(id) {
     this.id = id;
-    this.clr = Colors.blueGrey;
+    this.clr = Colors.white;
     this.enabled = true;
     this.str = '';
   }
