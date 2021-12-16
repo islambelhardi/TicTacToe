@@ -1,16 +1,7 @@
-# flutter_xo
+# TicTacToe with Flutter
 
-A new Flutter project.
+I tried to make Simple game using flutter and this is the result
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot_1639487248](https://user-images.githubusercontent.com/86858341/146359692-7bd3b418-c237-4349-a4ae-fa5760cea26e.png)
+![Screenshot_1639487242](https://user-images.githubusercontent.com/86858341/146359752-9dd40465-8c63-46cc-addd-5dbb3bb3b608.png)
